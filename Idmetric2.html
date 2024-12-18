@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student ID Card Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+	body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.id-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.student-image {
+    width: 33%;
+    object-fit: cover;
+}
+
+.card-info {
+    flex: 1;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student ID Card Generator</h1>
+        <form id="idCardForm">
+            <input type="text" id="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" placeholder="Last Name" required>
+            <input type="text" id="dob" placeholder="Date of Birth (DD/MM)" required pattern="\d{2}/\d{2}">
+            <select id="level" required>
+                <option value="">Select Level</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+            </select>
+            <select id="department" required>
+                <option value="">Select Department</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Chemical Engineering">Chemical Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Telecommunication Engineering">Telecommunication Engineering</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+            </select>
+            <input type="text" id="institution" placeholder="Institution" required>
+            <input type="text" id="hobby" placeholder="Hobby" required>
+            <input type="text" id="bestCourse" placeholder="Best Course" required>
+            <input type="file" id="image" accept="image/*" required>
+            <input type="text" id="career" placeholder="Career" required>
+            <button type="submit">Generate ID Card</button>
+        </form>
+        <div id="idCard" class="id-card" style="display: none;">
+            <img id="studentImage" class="student-image" alt="Student">
+            <div class="card-info">
+                <h2 id="fullName"></h2>
+                <p><strong>D.O.B:</strong> <span id="dobDisplay"></span></p>
+                <p><strong>Level:</strong> <span id="levelDisplay"></span></p>
+                <p><strong>Department:</strong> <span id="departmentDisplay"></span></p>
+                <p><strong>Institution:</strong> <span id="institutionDisplay"></span></p>
+                <p><strong>Hobby:</strong> <span id="hobbyDisplay"></span></p>
+                <p><strong>Best Course:</strong> <span id="bestCourseDisplay"></span></p>
+                <p><strong>Career:</strong> <span id="careerDisplay"></span></p>
+            </div>
+        </div>
+    </div>
+    <script>
+	document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('idCardForm');
+    const idCard = document.getElementById('idCard');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        generateIDCard();
+    });
+
+    function generateIDCard() {
+        // Get form values
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const dob = document.getElementById('dob').value;
+        const level = document.getElementById('level').value;
+        const department = document.getElementById('department').value;
+        const institution = document.getElementById('institution').value;
+        const hobby = document.getElementById('hobby').value;
+        const bestCourse = document.getElementById('bestCourse').value;
+        const career = document.getElementById('career').value;
+        const imageFile = document.getElementById('image').files[0];
+
+        // Update ID card
+        document.getElementById('fullName').textContent = `${lastName} ${firstName}`;
+        document.getElementById('dobDisplay').textContent = dob;
+        document.getElementById('levelDisplay').textContent = level;
+        document.getElementById('departmentDisplay').textContent = department;
+        document.getElementById('institutionDisplay').textContent = institution;
+        document.getElementById('hobbyDisplay').textContent = hobby;
+        document.getElementById('bestCourseDisplay').textContent = bestCourse;
+        document.getElementById('careerDisplay').textContent = career;
+
+        // Display image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('studentImage').src = e.target.result;
+        }
+        reader.readAsDataURL(imageFile);
+
+        // Show ID card
+        idCard.style.display = 'flex';
+
+        // Hide form
+        form.style.display = 'none';
+    }
+});
+    </script>
+</body>
+</html>

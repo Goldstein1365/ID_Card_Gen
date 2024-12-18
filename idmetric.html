@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Generator</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+	body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, select, button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.id-card {
+  width: 300px;
+  border: 1px solid #333;
+  background-color: white;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: 10px;
+  display: none;
+}
+
+.id-card-header {
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+}
+
+.id-card-header h3 {
+  font-size: 14px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.id-card-header p {
+  font-size: 12px;
+  margin: 5px 0;
+  text-transform: uppercase;
+}
+
+.id-card-body {
+  padding: 10px;
+}
+
+.id-card-image {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #ff6347;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.id-card-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.id-card-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Create Your ID Card</h2>
+    <form id="idForm">
+      <label>First Name:</label>
+      <input type="text" id="firstName" required>
+
+      <label>Middle Name:</label>
+      <input type="text" id="middleName">
+
+      <label>Last Name:</label>
+      <input type="text" id="lastName" required>
+
+      <label>Matric Number:</label>
+      <input type="text" id="matricNumber" required>
+
+      <label>D.O.B (Date and Month):</label>
+      <input type="text" id="dob" placeholder="e.g. 15 April" required>
+
+      <label>Level:</label>
+      <select id="level">
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+        <option value="500">500</option>
+      </select>
+
+      <label>Department:</label>
+      <select id="department">
+        <option value="Electrical Engineering">Electrical Engineering</option>
+        <option value="Chemical Engineering">Chemical Engineering</option>
+        <option value="Mechanical Engineering">Mechanical Engineering</option>
+        <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="Telecommunication Engineering">Telecommunication Engineering</option>
+        <option value="Computer Engineering">Computer Engineering</option>
+      </select>
+
+      <label>Institution:</label>
+      <input type="text" id="institution" required>
+
+      <label>Upload Profile Image:</label>
+      <input type="file" id="profileImage" accept="image/*" required>
+
+      <button type="submit">Generate ID Card</button>
+    </form>
+
+    <div class="id-card" id="idCard">
+      <div class="id-card-header">
+        <h3>FEDERAL UNIVERSITY OF TECHNOLOGY MINNA, NIGERIA</h3>
+        <p>STUDENT IDENTITY CARD</p>
+      </div>
+      <div class="id-card-body">
+        <div class="id-card-image">
+          <img id="idProfileImage" alt="Profile Image">
+        </div>
+        <div class="id-card-info">
+          <p id="idFullName"></p>
+          <p><strong>Matric No:</strong> <span id="idMatricNumber"></span></p>
+          <p><strong>School:</strong> SEET</p>
+          <p><strong>Department:</strong> <span id="idDepartment"></span></p>
+          <p><strong>D.O.B:</strong> <span id="idDOB"></span></p>
+          <p><strong>Level:</strong> <span id="idLevel"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+	document.getElementById('idForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Get user inputs
+  const firstName = document.getElementById('firstName').value;
+  const middleName = document.getElementById('middleName').value;
+  const lastName = document.getElementById('lastName').value;
+  const matricNumber = document.getElementById('matricNumber').value;
+  const dob = document.getElementById('dob').value;
+  const level = document.getElementById('level').value;
+  const department = document.getElementById('department').value;
+  
+  // Set user inputs to the ID card
+  document.getElementById('idFullName').textContent = `${lastName} ${middleName} ${firstName}`;
+  document.getElementById('idMatricNumber').textContent = matricNumber;
+  document.getElementById('idDepartment').textContent = department;
+  document.getElementById('idDOB').textContent = dob;
+  document.getElementById('idLevel').textContent = level;
+
+  // Handle profile image
+  const file = document.getElementById('profileImage').files[0];
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    document.getElementById('idProfileImage').src = e.target.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+
+  // Show the ID card
+  document.getElementById('idCard').style.display = 'block';
+});
+
+  </script>
+</body>
+</html>
+
